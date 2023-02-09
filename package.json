@@ -1,0 +1,39 @@
+{
+    "name": "wheresmy-backend",
+    "version": "0.0.1",
+    "description": "Backend for Where's My Project",
+    "main": "dist/index.js",
+    "scripts": {
+        "start": "node dist/index.js",
+        "build": "tsc",
+        "dev": "nodemon src/index.ts"
+    },
+    "keywords": [],
+    "author": "Pranav M S",
+    "license": "ISC",
+    "devDependencies": {
+        "@types/bcrypt": "^5.0.0",
+        "@types/express": "*",
+        "@types/jsonwebtoken": "^9.0.1",
+        "@types/multer": "^1.4.7",
+        "@types/node": "*",
+        "nodemon": "*",
+        "ts-node": "*",
+        "typescript": "*"
+    },
+    "dependencies": {
+        "bcrypt": "^5.1.0",
+        "dotenv": "*",
+        "express": "*",
+        "joi": "^17.7.0",
+        "jsonwebtoken": "^9.0.0",
+        "mongodb": "^5.0.1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/WheresMy-DApp/wheresmy-backend.git"
+    },
+    "bugs": {
+        "url": "https://github.com/WheresMy-DApp/wheresmy-backend/issues"
+    }
+}
