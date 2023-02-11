@@ -1,0 +1,127 @@
+paths: 
+  /user/register:
+    post:
+      tags:
+        - User
+      summary: Register the user
+      description: Registering the user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+              
+      responses:
+        '200':
+          description: Returns a Message to be signed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SigningMessageResponse'
+                
+        '401':
+          description: Returns message with Unauthorized - User already Exists.
+
+  /user/initLogin:
+    post:
+      tags:
+        - User
+      summary: Initiate the Login Process
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+              
+      responses:
+        '200':
+          description: Returns a Message to be signed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SigningMessageResponse'
+        '401':
+          description: Returns message with Unauthorized - User not Found.
+          
+  /user/login:
+    post:
+      tags:
+        - User
+      summary: Login API
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+              
+      responses:
+        '200':
+          description: Returns a JWT on Successful login
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '401':
+          description: Unauthorized Error - Invalid signature / User not found
+
+  /health:
+    get:
+      tags:
+        - Health
+      summary: Health Check
+      responses:
+        '200':
+          description: Returns a message with status code 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "OK"
+          
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "6345b01a8f195a0121a095cb"
+        joinedAt:
+          type: string
+          format: date-time
+          example: '2023-02-11T22:32:28Z'
+        walletAddress:
+          type: string
+          example: "0x4B94A939d1A944de11579A1044aC1b7eD133D352"
+  
+    LoginRequest:
+      type: object
+      properties:
+        walletAddress:
+          type: string
+          example: "0x4B94A939d1A944de11579A1044aC1b7eD133D352"
+      
+    SigningMessageResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: |
+            Welcome to Where`s My Network.
+            Click 'Sign' to sign in.
+            
+            Nonce: 9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d
+            
+            This request will not trigger a blockchain transaction or cost any gas fees.I accept the Where's My Network Terms of Service : https://wheresmy.network/tos
+            
+    LoginResponse:
+      type: object
+      properties:
+        token:
+          type: string
+          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+        user:
+          $ref: '#/components/schemas/User'

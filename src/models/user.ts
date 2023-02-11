@@ -1,7 +1,6 @@
 import Joi from "joi"
 import { getDb } from "../utils/db"
-import { hash, compare } from "bcrypt"
-import { InvalidError, NotFound, UnauthorizedError, WrongPassword } from "../utils/errors"
+import { InvalidError, NotFoundError, UnauthorizedError } from "../utils/errors"
 import { JwtPayload, sign, verify } from "jsonwebtoken"
 import { ObjectId } from "mongodb"
 
@@ -62,13 +61,13 @@ export default class User {
             nonce: user.nonce,
         }});
         if (result.modifiedCount === 0) {
-            throw new NotFound("User not found")
+            throw new NotFoundError("User not found")
         }
     }
 
     async generateToken(): Promise<string> {
         if (!this.walletAddress) {
-            throw new NotFound("User id not found")
+            throw new NotFoundError("User id not found")
         }
         let token = sign({
             walletAddress: this.walletAddress,

@@ -1,16 +1,8 @@
-export class WrongPassword extends Error {
+export class NotFoundError extends Error {
     constructor(msg : string) {
         super(msg)
 
-        Object.setPrototypeOf(this, WrongPassword.prototype)
-    }
-}
-
-export class NotFound extends Error {
-    constructor(msg : string) {
-        super(msg)
-
-        Object.setPrototypeOf(this, NotFound.prototype)
+        Object.setPrototypeOf(this, NotFoundError.prototype)
     }
 }
 
@@ -27,5 +19,13 @@ export class UnauthorizedError extends Error {
         super(msg)
 
         Object.setPrototypeOf(this, UnauthorizedError.prototype)
+    }
+}
+
+export class TokenExpiredError extends Error {
+    constructor(msg : string) {
+        super(msg)
+
+        Object.setPrototypeOf(this, TokenExpiredError.prototype)
     }
 }
