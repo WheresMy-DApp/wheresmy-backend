@@ -21,3 +21,11 @@ export class InvalidError extends Error {
         Object.setPrototypeOf(this, InvalidError.prototype)
     }
 }
+
+export class UnauthorizedError extends Error {
+    constructor(msg : string) {
+        super(msg)
+
+        Object.setPrototypeOf(this, UnauthorizedError.prototype)
+    }
+}

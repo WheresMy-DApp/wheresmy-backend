@@ -1,17 +1,20 @@
-import express from 'express';
+import express, {Request, Response, NextFunction} from 'express';
 import dotenv from 'dotenv';
 
-import { router as echoRoutes } from './routes/echo'
+import { router as userRoutes } from './routes/user'
 
 dotenv.config();
 
 const app = express();
 
-app.use('/echo', echoRoutes);
+app.use('/user', userRoutes);
 
-app.get('/', (req, res) => {
-	res.send('Hello World!');
+app.get("/health", (req: Request, res: Response, next: NextFunction) => {
+    res.status(200).json({
+        status: "OK",
+    });
 });
+
 app.listen(process.env.PORT, () => {
-	console.log('Server is running on port ' + process.env.PORT);
+    console.log('Server is running on port ' + process.env.PORT);
 });
