@@ -16,7 +16,7 @@ const logger = winston.createLogger({
     debug: 4,
   },
   format: winston.format.combine(
-    winston.format.label({ label: "Autodata-Core-V2" }),
+    winston.format.label({ label: "WheresMyNetwork" }),
     winston.format.timestamp(),
     myFormat
   ),

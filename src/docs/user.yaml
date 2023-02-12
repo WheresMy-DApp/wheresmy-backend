@@ -7,7 +7,7 @@ paths:
       description: Registering the user
       requestBody:
         headers:
-          X-Device-Platform:
+          Device:
             schema:
               type: string
               example: "android / ios"
@@ -68,23 +68,6 @@ paths:
                 $ref: '#/components/schemas/LoginResponse'
         '401':
           description: Unauthorized Error - Invalid signature / User not found
-
-  /health:
-    get:
-      tags:
-        - Health
-      summary: Health Check
-      responses:
-        '200':
-          description: Returns a message with status code 200
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    example: "OK"
           
 components:
   schemas:
@@ -93,11 +76,11 @@ components:
       properties:
         id:
           type: string
-          example: "6345b01a8f195a0121a095cb"
+          example: "63e8e3eec05930e7be55d5f1"
         joinedAt:
           type: string
           format: date-time
-          example: '2023-02-11T22:32:28Z'
+          example: '2023-02-12T13:04:46.327Z'
         walletAddress:
           type: string
           example: "0x4B94A939d1A944de11579A1044aC1b7eD133D352"
@@ -117,26 +100,20 @@ components:
           example: "0x4B94A939d1A944de11579A1044aC1b7eD133D352"
         signature:
           type: string
-          example: "0xd4e8b7997d5e244981965a5f301658f780242ff51226e0fc6af21564867a0d560292b1aa17e41ca836111b7413bbbd3a0a430c0715ae511dd206396c8bed7abe1b"
+          example: "0xb5a442c3e7db3a0eadbe7b40a5276ac9d27422884f01c3bca9f8c168c68bdc5822411c61101add77d3a82801ecb3ba8aba7c873dead3682d0d908eac8e1a30ba1c"
       
     SigningMessageResponse:
       type: object
       properties:
         message:
           type: string
-          example: |
-            Welcome to Where`s My Network.
-            Click 'Sign' to sign in.
-            
-            Nonce: 9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d
-            
-            This request will not trigger a blockchain transaction or cost any gas fees.I accept the Where's My Network Terms of Service : https://wheresmy.network/tos
+          example: "Welcome to Where's My Network. Click \"Sign\" to sign in. Nonce: 286e32a4-fa15-438e-9cf9-86f32ffe6b06. This request will not trigger a blockchain transaction or cost any gas fees. I accept the Where's My Network Terms of Service : https://wheresmy.network/tos"
             
     LoginResponse:
       type: object
       properties:
         token:
           type: string
-          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ3YWxsZXRBZGRyZXNzIjoiMHg0Qjk0QTkzOWQxQTk0NGRlMTE1NzlBMTA0NGFDMWI3ZUQxMzNEMzUyIiwiaWF0IjoxNjc2MjExNDY2LCJleHAiOjE2Nzg4MDM0NjZ9.Dheh7i811jq1T_VD1sUmMQJ6LKUGjatByVsxT4GtQfs"
         user:
           $ref: '#/components/schemas/User'

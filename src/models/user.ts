@@ -6,7 +6,7 @@ import { ObjectId } from "mongodb"
 
 import { recoverPersonalSignature } from "eth-sig-util"
 import { bufferToHex } from "ethereumjs-util"
-import uuid from "uuid";
+import { v4 as uuidv4 } from 'uuid';
 
 export const collectionName = "users"
 
@@ -14,20 +14,21 @@ export default class User {
     id?: string | null
     joinedAt?: Date
     walletAddress?: string
-    nonce?: string
+    nonce?: string | null
 
-    constructor(id?: string | null, joinedAt?: Date, walletAddress?: string) {
+    constructor(id?: string | null, joinedAt?: Date, walletAddress?: string, nonce?: string | null) {
         this.id = id
         this.joinedAt = joinedAt
         this.walletAddress = walletAddress
-        this.nonce = uuid.v4();
+        this.nonce = nonce;
     }
 
     async #validate(): Promise<User> {
         const schema = Joi.object({
             id: Joi.string().allow(null).optional(),
             joinedAt: Joi.date().default(() => new Date()),
-            walletAddress: Joi.string().allow(null).optional()
+            walletAddress: Joi.string().allow(null).optional(),
+            nonce: Joi.string(),
         })
         let result = await schema.validateAsync(this)
         return result as User
@@ -44,13 +45,14 @@ export default class User {
     async updateNonce(): Promise<void> {
         let user = await this.#validate();
         let result = await getDb().collection(collectionName).updateOne({ walletAddress: user.walletAddress }, { $set: {
-            nonce: uuid.v4(),
+            nonce: uuidv4(),
         }});
     }
 
     async save(): Promise<void> {
         let user = await this.#validate();
         delete user.id;
+        user.nonce = uuidv4();
         let result = await getDb().collection(collectionName).insertOne(user);
         this.id = result.insertedId.toHexString();
     }
@@ -78,14 +80,7 @@ export default class User {
     }
 
     async generateSigningMessage(): Promise<string> {
-        let message = `
-        Welcome to Where's My Network.\n\n
-        Click "Sign" to sign in.\n\n
-        Nonce: ${this.nonce}\n
-        This request will not trigger a blockchain transaction or cost any gas fees.\n\n
-        I accept the Where's My Network Terms of Service :\n
-        https://wheresmy.network/tos
-        `
+        let message = `Welcome to Where's My Network. Click "Sign" to sign in. Nonce: ${this.nonce}. This request will not trigger a blockchain transaction or cost any gas fees. I accept the Where's My Network Terms of Service : https://wheresmy.network/tos`
         return message;
     }
 
@@ -95,7 +90,8 @@ export default class User {
             return new User(
                 result._id.toHexString(),
                 result.joinedAt,
-                result.walletAddress
+                result.walletAddress,
+                result.nonce
             )
         }
         return null;

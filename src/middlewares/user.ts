@@ -25,9 +25,9 @@ export const auth : RequestHandler = async (req : AuthenticatedRequest, res : Re
     }
 }
 
-export const registerMiddleware : RequestHandler = async (req : AuthenticatedRequest, res : Response, next : NextFunction) => {
+export const registerMiddleware : RequestHandler = async (req : Request, res : Response, next : NextFunction) => {
     try {
-        let device = req.headers["X-Device-Platform"] as string
+        let device = req.headers.device as string
         if(!device) {
             throw new UnauthorizedError("No device provided")
         }

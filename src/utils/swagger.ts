@@ -37,7 +37,7 @@ const swaggerDefinition = {
 
 const options = {
     swaggerDefinition,
-    apis: ['src/docs/routes.yaml'],
+    apis: ['src/docs/health.yaml', 'src/docs/user.yaml'],
 };
 
 const swaggerSpec = swaggerJSDoc(options);
