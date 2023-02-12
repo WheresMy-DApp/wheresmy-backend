@@ -31,6 +31,8 @@
         "joi": "^17.7.0",
         "jsonwebtoken": "^9.0.0",
         "mongodb": "^5.0.1",
+        "node-fpe": "^2.0.2",
+        "open-location-code": "^1.0.3",
         "swagger-jsdoc": "^6.2.8",
         "swagger-ui-express": "^4.6.0",
         "uuid": "^9.0.0",
