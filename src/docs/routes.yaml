@@ -6,10 +6,15 @@ paths:
       summary: Register the user
       description: Registering the user
       requestBody:
+        headers:
+          X-Device-Platform:
+            schema:
+              type: string
+              example: "android / ios"
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/LoginRequest'
+              $ref: '#/components/schemas/InitLoginRequest'
               
       responses:
         '200':
@@ -31,7 +36,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/LoginRequest'
+              $ref: '#/components/schemas/InitLoginRequest'
               
       responses:
         '200':
@@ -97,12 +102,22 @@ components:
           type: string
           example: "0x4B94A939d1A944de11579A1044aC1b7eD133D352"
   
+    InitLoginRequest:
+      type: object
+      properties:
+        walletAddress:
+          type: string
+          example: "0x4B94A939d1A944de11579A1044aC1b7eD133D352"
+
     LoginRequest:
       type: object
       properties:
         walletAddress:
           type: string
           example: "0x4B94A939d1A944de11579A1044aC1b7eD133D352"
+        signature:
+          type: string
+          example: "0xd4e8b7997d5e244981965a5f301658f780242ff51226e0fc6af21564867a0d560292b1aa17e41ca836111b7413bbbd3a0a430c0715ae511dd206396c8bed7abe1b"
       
     SigningMessageResponse:
       type: object
