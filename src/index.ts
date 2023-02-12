@@ -10,6 +10,9 @@ dotenv.config();
 
 const app = express();
 
+app.get('/', (req: Request, res: Response, next: NextFunction) => {
+    res.redirect('/docs');
+});
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use('/user', userRoutes);
 
