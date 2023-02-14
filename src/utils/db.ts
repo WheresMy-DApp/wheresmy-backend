@@ -19,7 +19,7 @@ export const establishConnection = async (): Promise<void> => {
         client.connect().then(clientConnection => {
             console.log("Database connection is now active!")
             db = clientConnection.db(dbName)
-            db.createIndex("users", { phone: 1 }, { unique: true })
+            db.createIndex("users", { walletAddress: 1 }, { unique: true })
         })
     } catch (err) {
         throw err
