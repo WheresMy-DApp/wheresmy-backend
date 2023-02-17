@@ -39,3 +39,19 @@ export async function getLostDevices(req: AuthenticatedRequest, res: Response, n
         next(error);
     }
 }
+
+export async function foundDevicePing(req: Request, res: Response, next: NextFunction) {
+    try {
+        const devices = await Device.findByKeyValue("deviceHash", req.body.deviceHash);
+        if (devices.length == 0) {
+            throw new UnauthorizedError("Device not found");
+        }
+        const device = devices[0];
+        if (device.isLost == true) {
+            // send Push notification to user
+        }
+        
+    } catch (error) {
+        next(error);
+    }
+}
