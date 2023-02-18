@@ -1,6 +1,6 @@
 import Web3 from "web3";
 const address = process.env.CONTRACT_ADDRESS;
-const ABI = require("./abis/WheresMyNFT.json");
+const ABI = require("src/utils/abis/WheresMyNFT.json");
 const privateKey = process.env.PRIVATE_KEY;
 const ethnode = process.env.ETHNODE;
 
