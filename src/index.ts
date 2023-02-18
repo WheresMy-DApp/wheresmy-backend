@@ -3,8 +3,10 @@ import dotenv from 'dotenv';
 import logger from './utils/logger';
 import { NotFoundError, InvalidError, TokenExpiredError, UnauthorizedError } from './utils/errors';
 import { establishConnection } from './utils/db';
-import { router as userRoutes } from './routes/user'
-import { router as deviceRoutes } from './routes/device'
+import { router as userRoutes } from './routes/user';
+import { router as deviceRoutes } from './routes/device';
+
+import { abi } from './utils/abis/WheresMyNFT';
 
 import { swaggerUi, swaggerSpec } from './utils/swagger';
 dotenv.config();
@@ -20,6 +22,9 @@ app.get('/', (req: Request, res: Response, next: NextFunction) => {
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use('/user', userRoutes);
 app.use('/device', deviceRoutes);
+app.get('/abi', async (req: Request, res: Response, next: NextFunction) => {
+    res.send(abi());
+})
 
 app.get("/health", (req: Request, res: Response, next: NextFunction) => {
     res.status(200).json({

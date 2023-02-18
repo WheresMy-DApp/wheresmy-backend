@@ -6,14 +6,17 @@ dotenv.config();
 import * as PushAPI from "@pushprotocol/restapi";
 import * as ethers from "ethers";
 
+import { abi } from './abis/WheresMyNFT';
+
 const address = process.env.CONTRACT_ADDRESS;
-const ABI = require("src/utils/abis/WheresMyNFT.json");
+const ABI = abi();
 const privateKey = process.env.PRIVATE_KEY;
 const ethnode = process.env.ETHNODE;
 
 // const PK = 'your_channel_address_secret_key'; // channel private key
 const Pkey = `0x${privateKey!}`;
 const signer = new ethers.Wallet(Pkey);
+
 
 export class Web3Notification {
     toAddress: string
@@ -41,7 +44,7 @@ export default class Web3Utils {
 
     static async foundDevicePing(_deviceHash: string, _locationCode: string, _timestamp: number) {
         const web3 = new Web3(new Web3.providers.HttpProvider(ethnode!))
-        const contract = await new web3.eth.Contract(ABI.abi, address);
+        const contract = await new web3.eth.Contract(ABI.abi as any, address);
         const account = web3.eth.accounts.privateKeyToAccount(privateKey!)
         const transaction = contract.methods.foundDevicePing(_deviceHash, _locationCode, _timestamp);
         const options = {

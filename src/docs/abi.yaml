@@ -1,0 +1,66 @@
+paths: 
+  /abi:
+    get:
+      tags:
+        - ABI
+      summary: Get all ABIs
+      description: Get all ABIs
+      responses:
+        '200':
+          description: Returns all ABIs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ABI'
+
+components:
+  schemas:
+    ABI:
+      type: object
+      properties:
+        abi:
+          type: string
+          description: ABI
+        abiHash:
+          type: string
+          description: ABI hash
+        abiType:
+          type: string
+          description: ABI type
+        abiVersion:
+          type: string
+          description: ABI version
+        description:
+          type: string
+          description: Description
+        id:
+          type: integer
+          format: int64
+          description: ID
+        name:
+          type: string
+          description: Name
+        schema:
+          type: string
+          description: Schema
+        schemaHash:
+          type: string
+          description: Schema hash
+        schemaType:
+          type: string
+          description: Schema type
+        schemaVersion:
+          type: string
+          description: Schema version
+        status:
+          type: string
+          description: Status
+        timestamp:
+          type: string
+          description: Timestamp
+        version:
+          type: integer
+          format: int64
+          description: Version

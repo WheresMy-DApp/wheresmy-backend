@@ -27,6 +27,10 @@ const swaggerDefinition = {
             description: 'Device related endpoints',
         },
         {
+            name: 'ABI',
+            description: 'ABI related endpoints',
+        },
+        {
             name: 'Health',
             description: 'Getting health of API'
         }
@@ -41,7 +45,7 @@ const swaggerDefinition = {
 
 const options = {
     swaggerDefinition,
-    apis: ['src/docs/health.yaml', 'src/docs/user.yaml', 'src/docs/device.yaml'],
+    apis: ['src/docs/health.yaml', 'src/docs/user.yaml', 'src/docs/device.yaml', 'src/docs/abi.yaml'],
 };
 
 const swaggerSpec = swaggerJSDoc(options);
