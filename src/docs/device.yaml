@@ -1,0 +1,156 @@
+paths: 
+  /device:
+    post:
+      tags:
+        - Device
+      summary: Adding the device
+      description: Registering the device
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddDeviceSchema'
+              
+      responses:
+        '201':
+          description: Returns the added device
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Device'
+                
+        '401':
+          description: Returns message with Unauthorized.
+          
+    get:
+      tags:
+        - Device
+      summary: Get all devices
+      description: Get all devices
+      responses:
+        '200':
+          description: Returns all devices
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Device'
+                  
+        '401':
+          description: Returns message with Unauthorized.
+
+
+  /device/reportDevice:
+    post:
+      tags:
+        - Device
+      summary: Report the device as lost/found
+      description: Report the device as lost/found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReportDeviceSchema'
+              
+      responses:
+        '200':
+          description: Returns success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                
+        '401':
+          description: Returns message with Unauthorized.
+
+  /device/foundPing:
+    post:
+      tags:
+        - Device
+      summary: Ping the device as found
+      description: Ping the device as found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FoundPingSchema'
+              
+      responses:
+        '200':
+          description: Returns success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                
+        '401':
+          description: Returns message with Unauthorized.
+          
+components:
+  schemas:
+    AddDeviceSchema:
+      type: object
+      properties:
+        deviceNickname:
+          type: string
+          example: "My Macbook"
+        isLost:
+          type: boolean
+          example: false
+          default: false
+        deviceHash:
+          type: string
+          example: "ed2456914e48c1e17b7bd922177291ef8b7f553edf1b1f66b6fc1a076524b22f"
+        
+    Device:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "63e8e3eec05930e7be55d5f1"
+        createdAt:
+          type: string
+          format: date-time
+          example: '2023-02-12T13:04:46.327Z'
+        owner:
+          type: string
+          example: "0x4B94A939d1A944de11579A1044aC1b7eD133D352"
+        deviceNickname:
+          type: string
+          example: "My Macbook"
+        isLost:
+          type: boolean
+          example: false
+          default: false
+        deviceHash:
+          type: string
+          example: "ed2456914e48c1e17b7bd922177291ef8b7f553edf1b1f66b6fc1a076524b22f"
+
+    ReportDeviceSchema:
+      type: object
+      properties:
+        deviceHash:
+          type: string
+          example: "ed2456914e48c1e17b7bd922177291ef8b7f553edf1b1f66b6fc1a076524b22f"
+        isLost:
+          type: boolean
+          example: true
+
+    FoundPingSchema:
+      type: object
+      properties:
+        deviceHash:
+          type: string
+          example: "ed2456914e48c1e17b7bd922177291ef8b7f553edf1b1f66b6fc1a076524b22f"
+        locationCode:
+          type: string
+          example: 7J4VVGJ3+4G

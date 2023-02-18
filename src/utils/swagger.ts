@@ -5,7 +5,7 @@ const swaggerDefinition = {
     openapi: '3.0.0',
     info: {
         title: `API for Where's My Network`,
-        version: '0.0.1',
+        version: '0.0.2',
         description:
             'REST API for Where\'s My Network',
         license: {
@@ -23,6 +23,10 @@ const swaggerDefinition = {
             description: 'User related endpoints',
         },
         {
+            name: 'Device',
+            description: 'Device related endpoints',
+        },
+        {
             name: 'Health',
             description: 'Getting health of API'
         }
@@ -37,7 +41,7 @@ const swaggerDefinition = {
 
 const options = {
     swaggerDefinition,
-    apis: ['src/docs/health.yaml', 'src/docs/user.yaml'],
+    apis: ['src/docs/health.yaml', 'src/docs/user.yaml', 'src/docs/device.yaml'],
 };
 
 const swaggerSpec = swaggerJSDoc(options);

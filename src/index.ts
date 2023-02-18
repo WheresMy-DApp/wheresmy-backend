@@ -4,6 +4,7 @@ import logger from './utils/logger';
 import { NotFoundError, InvalidError, TokenExpiredError, UnauthorizedError } from './utils/errors';
 import { establishConnection } from './utils/db';
 import { router as userRoutes } from './routes/user'
+import { router as deviceRoutes } from './routes/device'
 
 import { swaggerUi, swaggerSpec } from './utils/swagger';
 dotenv.config();
@@ -15,8 +16,10 @@ app.use(express.json());
 app.get('/', (req: Request, res: Response, next: NextFunction) => {
     res.redirect('/docs');
 });
+
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use('/user', userRoutes);
+app.use('/device', deviceRoutes);
 
 app.get("/health", (req: Request, res: Response, next: NextFunction) => {
     res.status(200).json({

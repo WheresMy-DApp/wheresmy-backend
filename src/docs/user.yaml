@@ -1,32 +1,4 @@
 paths: 
-  /user/register:
-    post:
-      tags:
-        - User
-      summary: Register the user
-      description: Registering the user
-      requestBody:
-        headers:
-          Device:
-            schema:
-              type: string
-              example: "android / ios"
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/InitLoginRequest'
-              
-      responses:
-        '200':
-          description: Returns a Message to be signed
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SigningMessageResponse'
-                
-        '401':
-          description: Returns message with Unauthorized - User already Exists.
-
   /user/initLogin:
     post:
       tags:
@@ -45,8 +17,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SigningMessageResponse'
-        '401':
-          description: Returns message with Unauthorized - User not Found.
           
   /user/login:
     post:

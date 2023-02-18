@@ -43,10 +43,10 @@ export default class Device {
     static parse(req: any): Device {
         return new Device(
             req.id,
-            req.createdAt,
+            new Date(),
             req.owner,
             req.deviceNickname,
-            req.isLost,
+            req.isLost || false,
             req.deviceHash
         )
     }
