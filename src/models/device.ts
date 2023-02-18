@@ -1,28 +1,42 @@
 import Joi from "joi"
 import { getDb } from "../utils/db"
 import { InvalidError, NotFoundError, UnauthorizedError } from "../utils/errors"
-import { JwtPayload, sign, verify } from "jsonwebtoken"
 import { ObjectId } from "mongodb"
 
-import { recoverPersonalSignature } from "eth-sig-util"
-import { bufferToHex } from "ethereumjs-util"
-import { v4 as uuidv4 } from 'uuid';
-
 export const collectionName = "devices"
+
+enum DeviceType {
+    ANDROID = "ANDROID",
+    IOS = "IOS",
+    MAC = "MAC",
+    WINDOWS = "WINDOWS",
+    LINUX = "LINUX",
+    AUDIO = "AUDIO",
+    WEARABLE = "WEARABLE",
+    OTHER = "OTHER"
+}
 
 export default class Device {
     id?: string | null
     createdAt?: Date
     owner?: string
     deviceNickname?: string
+    deviceType?: {
+        type?: DeviceType,
+        name?: string
+    }
     isLost?: boolean
     deviceHash?: string
 
-    constructor(id?: string | null, createdAt?: Date, owner?: string, deviceNickname?: string, isLost?: boolean, deviceHash?: string) {
+    constructor(id?: string | null, createdAt?: Date, owner?: string, deviceNickname?: string, deviceType?: { type: DeviceType, name: string }, isLost?: boolean, deviceHash?: string) {
         this.id = id
         this.createdAt = createdAt
         this.owner = owner
         this.deviceNickname = deviceNickname
+        this.deviceType = {
+            type: deviceType?.type,
+            name: deviceType?.name
+        }
         this.isLost = isLost;
         this.deviceHash = deviceHash;
     }
@@ -33,6 +47,10 @@ export default class Device {
             createdAt: Joi.date().default(() => new Date()),
             owner: Joi.string(),
             deviceNickname: Joi.string(),
+            deviceType: Joi.object({
+                type: Joi.string().valid(...Object.values(DeviceType)).required(),
+                name: Joi.string().required()
+            }),
             isLost: Joi.boolean().default(false),
             deviceHash: Joi.string(),
         })
@@ -46,6 +64,10 @@ export default class Device {
             new Date(),
             req.owner,
             req.deviceNickname,
+            {
+                type: req.deviceType.type,
+                name: req.deviceType.name
+            },
             req.isLost || false,
             req.deviceHash
         )
@@ -81,6 +103,7 @@ export default class Device {
                 device.createdAt,
                 device.owner,
                 device.deviceNickname,
+                device.deviceType,
                 device.isLost,
                 device.deviceHash
             )

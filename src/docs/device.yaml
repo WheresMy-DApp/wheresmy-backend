@@ -1,4 +1,4 @@
-paths: 
+paths:
   /device:
     post:
       tags:
@@ -9,37 +9,36 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AddDeviceSchema'
-              
+              $ref: "#/components/schemas/AddDeviceSchema"
+
       responses:
-        '201':
+        "201":
           description: Returns the added device
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Device'
-                
-        '401':
+                $ref: "#/components/schemas/Device"
+
+        "401":
           description: Returns message with Unauthorized.
-          
+
     get:
       tags:
         - Device
       summary: Get all devices
       description: Get all devices
       responses:
-        '200':
+        "200":
           description: Returns all devices
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Device'
-                  
-        '401':
-          description: Returns message with Unauthorized.
+                  $ref: "#/components/schemas/Device"
 
+        "401":
+          description: Returns message with Unauthorized.
 
   /device/reportDevice:
     post:
@@ -51,10 +50,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ReportDeviceSchema'
-              
+              $ref: "#/components/schemas/ReportDeviceSchema"
+
       responses:
-        '200':
+        "200":
           description: Returns success
           content:
             application/json:
@@ -64,8 +63,8 @@ paths:
                   success:
                     type: boolean
                     example: true
-                
-        '401':
+
+        "401":
           description: Returns message with Unauthorized.
 
   /device/foundPing:
@@ -78,10 +77,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/FoundPingSchema'
-              
+              $ref: "#/components/schemas/FoundPingSchema"
+
       responses:
-        '200':
+        "200":
           description: Returns success
           content:
             application/json:
@@ -91,10 +90,10 @@ paths:
                   success:
                     type: boolean
                     example: true
-                
-        '401':
+
+        "401":
           description: Returns message with Unauthorized.
-          
+
 components:
   schemas:
     AddDeviceSchema:
@@ -103,6 +102,16 @@ components:
         deviceNickname:
           type: string
           example: "My Macbook"
+        deviceType:
+          type: object
+          properties:
+            type:
+              type: string
+              example: "ANDROID | IOS | MAC | WINDOWS | LINUX | AUDIO | WEARABLE | OTHER"
+            name:
+              type: string
+              example: "Macbook Pro"
+
         isLost:
           type: boolean
           example: false
@@ -110,7 +119,7 @@ components:
         deviceHash:
           type: string
           example: "ed2456914e48c1e17b7bd922177291ef8b7f553edf1b1f66b6fc1a076524b22f"
-        
+
     Device:
       type: object
       properties:
@@ -120,13 +129,22 @@ components:
         createdAt:
           type: string
           format: date-time
-          example: '2023-02-12T13:04:46.327Z'
+          example: "2023-02-12T13:04:46.327Z"
         owner:
           type: string
           example: "0x4B94A939d1A944de11579A1044aC1b7eD133D352"
         deviceNickname:
           type: string
           example: "My Macbook"
+        deviceType:
+          type: object
+          properties:
+            type:
+              type: string
+              example: "ANDROID | IOS | MAC | WINDOWS | LINUX | AUDIO | WEARABLE | OTHER"
+            name:
+              type: string
+              example: "Macbook Pro"
         isLost:
           type: boolean
           example: false
