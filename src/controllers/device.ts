@@ -12,7 +12,7 @@ export async function addDevice(req: AuthenticatedRequest, res: Response, next: 
         req.body.owner = req.userId;
         const device = Device.parse(req.body);
         await device.save();
-        res.status(201).send({
+        res.status(200).send({
             device: device
         });
     } catch (error) {

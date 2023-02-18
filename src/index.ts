@@ -1,4 +1,5 @@
 import express, { Request, Response, NextFunction } from 'express';
+const cors = require("cors");
 import dotenv from 'dotenv';
 import logger from './utils/logger';
 import { NotFoundError, InvalidError, TokenExpiredError, UnauthorizedError } from './utils/errors';
@@ -14,6 +15,13 @@ dotenv.config();
 establishConnection();
 const app = express();
 app.use(express.json());
+
+app.use(
+    cors({
+        origin: "*",
+        optionsSuccessStatus: 200,
+    })
+);
 
 app.get('/', (req: Request, res: Response, next: NextFunction) => {
     res.redirect('/docs');
