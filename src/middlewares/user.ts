@@ -17,7 +17,7 @@ export default async function userAuth(req : AuthenticatedRequest, res : Respons
         }
         let token = tokenHeader.split(" ")[1]
         let walletAddress = await User.validateToken(token);
-        req.walletAddress = walletAddress;
+        req.walletAddress = walletAddress.toUpperCase();
         next()
     } catch (err : any) {
         res.status(401).json({
