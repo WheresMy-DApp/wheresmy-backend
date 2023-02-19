@@ -100,6 +100,7 @@ export default class User {
     static async validateToken(token: string): Promise<string> {
         try {
             let decoded = verify(token, process.env.jwtSecret || "secret") as JwtPayload
+            console.log("decoded: ", decoded);
             return decoded.id
         } catch (e) {
             throw new InvalidError("Invalid token")
