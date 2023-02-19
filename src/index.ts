@@ -7,6 +7,8 @@ import { establishConnection } from './utils/db';
 import { router as userRoutes } from './routes/user';
 import { router as deviceRoutes } from './routes/device';
 
+import userAuth from './middlewares/user';
+
 import { abi } from './utils/abis/WheresMyNFT';
 
 import { swaggerUi, swaggerSpec } from './utils/swagger';
@@ -29,7 +31,7 @@ app.get('/', (req: Request, res: Response, next: NextFunction) => {
 
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use('/user', userRoutes);
-app.use('/device', deviceRoutes);
+app.use('/device', userAuth, deviceRoutes);
 app.get('/abi', async (req: Request, res: Response, next: NextFunction) => {
     res.send(abi());
 })

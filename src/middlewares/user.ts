@@ -9,7 +9,7 @@ export interface AuthenticatedRequest extends Request {
 
 }
 
-export default async function user(req : AuthenticatedRequest, res : Response, next : NextFunction) {
+export default async function userAuth(req : AuthenticatedRequest, res : Response, next : NextFunction) {
     try {
         let tokenHeader = req.headers.authorization
         if(!tokenHeader) {
