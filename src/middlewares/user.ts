@@ -7,7 +7,7 @@ export interface AuthenticatedRequest extends Request {
     file?: Express.Multer.File
 }
 
-export const auth : RequestHandler = async (req : AuthenticatedRequest, res : Response, next : NextFunction) => {
+export default async function auth(req : AuthenticatedRequest, res : Response, next : NextFunction) {
     try {
         let tokenHeader = req.headers.authorization
         if(!tokenHeader) {
