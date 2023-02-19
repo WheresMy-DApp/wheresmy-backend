@@ -31,7 +31,7 @@ app.get('/', (req: Request, res: Response, next: NextFunction) => {
 
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use('/user', userRoutes);
-app.use('/device', userAuth, deviceRoutes);
+app.use('/device', deviceRoutes);
 app.get('/abi', async (req: Request, res: Response, next: NextFunction) => {
     res.send(abi());
 })
