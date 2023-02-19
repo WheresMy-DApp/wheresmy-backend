@@ -3,11 +3,13 @@ import User from "../models/user";
 import { UnauthorizedError } from "../utils/errors";
 
 export interface AuthenticatedRequest extends Request {
-    userId?: string,
+    walletAddress?: string,
     file?: Express.Multer.File
+
+
 }
 
-export default async function auth(req : AuthenticatedRequest, res : Response, next : NextFunction) {
+export default async function user(req : AuthenticatedRequest, res : Response, next : NextFunction) {
     try {
         let tokenHeader = req.headers.authorization
         if(!tokenHeader) {
@@ -16,7 +18,7 @@ export default async function auth(req : AuthenticatedRequest, res : Response, n
         let token = tokenHeader.split(" ")[1]
         let user = await User.validateToken(token)
         console.log(user);
-        req.userId = user
+        req.walletAddress = user
         next()
     } catch (err : any) {
         res.status(401).json({

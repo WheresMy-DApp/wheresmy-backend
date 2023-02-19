@@ -9,7 +9,7 @@ import { Web3Notification } from "../utils/web3";
 
 export async function addDevice(req: AuthenticatedRequest, res: Response, next: NextFunction) {
     try {
-        req.body.owner = req.userId;
+        req.body.owner = req.walletAddress;
         const device = Device.parse(req.body);
         await device.save();
         res.status(200).send({
@@ -22,7 +22,7 @@ export async function addDevice(req: AuthenticatedRequest, res: Response, next: 
 
 export async function getDevices(req: AuthenticatedRequest, res: Response, next: NextFunction) {
     try {
-        const devices = await Device.findByKeyValue("owner", req.userId!);
+        const devices = await Device.findByKeyValue("owner", req.walletAddress!);
         res.status(200).send({
             devices: devices
         });
