@@ -10,7 +10,6 @@ import { Web3Notification } from "../utils/web3";
 export async function addDevice(req: AuthenticatedRequest, res: Response, next: NextFunction) {
     try {
         req.body.owner = req.userId;
-        console.log(req.userId);
         const device = Device.parse(req.body);
         await device.save();
         res.status(200).send({

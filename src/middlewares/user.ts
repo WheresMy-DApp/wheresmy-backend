@@ -15,6 +15,7 @@ export const auth : RequestHandler = async (req : AuthenticatedRequest, res : Re
         }
         let token = tokenHeader.split(" ")[1]
         let user = await User.validateToken(token)
+        console.log(user);
         req.userId = user
         next()
     } catch (err : any) {
