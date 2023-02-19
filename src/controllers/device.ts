@@ -22,8 +22,8 @@ export async function addDevice(req: AuthenticatedRequest, res: Response, next: 
 
 export async function getDevices(req: AuthenticatedRequest, res: Response, next: NextFunction) {
     try {
-        const devices = await Device.findByKeyValue("owner", req.walletAddress!);
         console.log(req.walletAddress);
+        const devices = await Device.findByKeyValue("owner", req.walletAddress!);
         console.log(devices);
         res.status(200).send({
             devices: devices
