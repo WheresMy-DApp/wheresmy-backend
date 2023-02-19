@@ -16,10 +16,8 @@ export default async function userAuth(req : AuthenticatedRequest, res : Respons
             throw new Error("No token provided")
         }
         let token = tokenHeader.split(" ")[1]
-        console.log("token ", token);
-        let user = await User.validateToken(token)
-        console.log(user);
-        req.walletAddress = user
+        let walletAddress = await User.validateToken(token);
+        req.walletAddress = walletAddress;
         next()
     } catch (err : any) {
         res.status(401).json({
